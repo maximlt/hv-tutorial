@@ -1,6 +1,5 @@
 import pathlib
 import pandas as pd
-import os
 
 def check_data(file_path='data/earthquakes-projected.parq'):
     """
