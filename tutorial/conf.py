@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from datetime import date
 
-from nbsite.shared_conf import *
+import pydata_sphinx_theme
 
+from nbsite.shared_conf import *
 
 project = "HoloViz Tutorial"
 authors = 'HoloViz authors'
@@ -18,6 +19,13 @@ extensions += [
 ]
 
 html_static_path += ['_static']
+
+if pydata_sphinx_theme.__version__ == '0.16.1':
+    # See https://github.com/pydata/pydata-sphinx-theme/issues/2088
+    templates_path.append('_static/patch_templates')  # noqa
+
+# Without this .txt is appended to the files
+html_sourcelink_suffix = ''
 
 html_theme = "pydata_sphinx_theme"
 html_logo = '_static/holoviz-logo-unstacked.svg'
