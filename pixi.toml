@@ -7,6 +7,11 @@ platforms = ["linux-64", "osx-arm64", "osx-64", "win-64"]
 docs = ["doc"]
 tests = ["tests"]
 
+[tasks]
+download-data = 'python tutorial/download_data.py'
+launch-lab = { cmd = 'jupyter lab tutorial/index.ipynb', depends-on = ['download-data']}
+launch-notebook = { cmd = 'jupyter notebook tutorial/index.ipynb', depends-on = ['download-data']}
+
 [dependencies]
 python = "=3.10"
 datashader = ">=0.16.2"
@@ -35,7 +40,7 @@ channels = ["pyviz/label/tooling_dev", "conda-forge"]
 nbsite = ">=0.8.7"
 
 [feature.doc.tasks]
-docs-build  = 'sphinx-build -b html tutorial builtdocs'
+docs-build = { cmd = 'sphinx-build -j auto -b html tutorial builtdocs', depends-on = ['download-data']}
 
 [feature.tests.dependencies]
 # Test deps, that used to be in a `test` env, same reasons.
@@ -43,4 +48,4 @@ pytest = "*"
 nbsmoke = "*"
 
 [feature.tests.tasks]
-test-example = 'pytest tutorial --nbsmoke-run -k ".ipynb"'
+test-example = { cmd = 'pytest tutorial --nbsmoke-run -k ".ipynb"', depends-on = ['download-data']}

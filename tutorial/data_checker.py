@@ -2,12 +2,12 @@ import pathlib
 import pandas as pd
 import os
 
-def check_data(file_path='../data/earthquakes-projected.parq'):
+def check_data(file_path='data/earthquakes-projected.parq'):
     """
     Checks if the data file exists and reads it.
 
     Args:
-        file_path (str, optional): The path to the parquet file. Default is '../data/earthquakes-projected.parq'.
+        file_path (str, optional): The path to the parquet file. Default is 'data/earthquakes-projected.parq'.
 
     """
     path = pathlib.Path(file_path)
@@ -15,7 +15,7 @@ def check_data(file_path='../data/earthquakes-projected.parq'):
     # Hack to make Nebari installation work for SciPy 2024; can be deleted after the conference
     try:
         source = pathlib.Path("/shared/scipy/hvplot-and-panel")
-        dest = pathlib.Path("../data")
+        dest = pathlib.Path("data")
         data_path = dest / "earthquakes-projected.parq"
         if source.exists() and not data_path.exists():
             for path in source.glob("*"):

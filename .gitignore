@@ -180,3 +180,7 @@ cython_debug/
 # Sphinx
 builtdocs/
 jupyter_execute/
+
+# Empty dir for artifacts generated when running the notebooks
+tutorial/output/
+tutorial/data
