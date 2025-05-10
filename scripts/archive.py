@@ -16,7 +16,7 @@ def create_zip(output_filename, base_dir):
         for file_path in tutorial_dir.rglob('*'):
             if file_path.name == 'conf.py':
                 continue
-            if any(d in file_path.parts for d in ['data', '.ipynb_checkpoints', '__pycache__']):
+            if any(d in file_path.parts for d in ['data', '.ipynb_checkpoints', '__pycache__', '_templates']):
                 continue
             arcname = file_path.relative_to(base_dir)
             zipf.write(file_path, arcname=arcname)

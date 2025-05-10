@@ -9,3 +9,12 @@ repos:
     hooks:
       - id: clean-notebook
         args: [-i, slideshow, --keep-empty] # ignore RISE slideshow metadata and keep empty cells
+-   repo: local
+    hooks:
+      - id: run-pixi
+        name: Run pixi
+        entry: pixi
+        language: system
+        files: ^pixi\.toml$
+        pass_filenames: false
+        args: [workspace, export, conda-environment, binder/environment.yml]

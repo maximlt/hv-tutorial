@@ -25,6 +25,10 @@ if pydata_sphinx_theme.__version__ == '0.16.1':
     # See https://github.com/pydata/pydata-sphinx-theme/issues/2088
     templates_path.append('_static/patch_templates')  # noqa
 
+templates_path += [
+    '_templates'
+]
+
 # Without this .txt is appended to the files
 html_sourcelink_suffix = ''
 
@@ -47,15 +51,27 @@ html_theme_options.update({
             "icon": "fab fa-discourse",
         },
     ],
+    'secondary_sidebar_items': [
+        "page-toc",
+        "edit-this-page",
+        "sourcelink",
+        "binderlink",
+    ],
 })
+
+gh_org = 'holoviz'
+gh_repo = 'tutorial'
+gh_branch = 'main'
+doc_path = 'tutorial'
 
 html_context.update({
     'last_release': f'v{release}',
     'default_mode': 'light',
-    'github_user': 'holoviz',
-    'github_repo': 'tutorial',
-    'github_version': 'main',
-    'doc_path': 'tutorial',
+    'github_user': gh_org,
+    'github_repo': gh_repo,
+    'github_version': gh_branch,
+    'doc_path': doc_path,
+    'binder_url': f'https://mybinder.org/v2/gh/{gh_org}/{gh_repo}/{gh_branch}?filepath={doc_path}/'  # {relpath}
 })
 
 # cell execution timeout in seconds (-1 to ignore, 30 by default)

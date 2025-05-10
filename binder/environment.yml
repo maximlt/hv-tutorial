@@ -1,0 +1,25 @@
+name: default
+channels:
+- conda-forge
+- nodefaults
+dependencies:
+- python 3.13.*
+- datashader >=0.18.1
+- holoviews >=1.20.2
+- hvplot >=0.11.3
+- panel >=1.6.3
+- param >=2.2.0,<3.0
+- dask *
+- jupyterlab *
+- notebook *
+- matplotlib-base >=3
+- ipympl *
+- fsspec *
+- netcdf4 *
+- plotly *
+- pyarrow *
+- xarray *
+- nomkl *
+- pre-commit *
+- requests *
+- tqdm *
