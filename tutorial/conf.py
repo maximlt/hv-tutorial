@@ -58,6 +58,9 @@ html_context.update({
     'github_repo': 'tutorial',
 })
 
+# cell execution timeout in seconds (-1 to ignore, 30 by default)
+nb_execution_timeout = 240
+
 # Uncomment to turn off notebook execution.
 # nb_execution_mode = "off"
 
