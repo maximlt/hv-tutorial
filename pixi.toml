@@ -45,7 +45,8 @@ docs-build = { cmd = 'sphinx-build -j auto -b html tutorial builtdocs', depends-
 [feature.tests.dependencies]
 # Test deps, that used to be in a `test` env, same reasons.
 pytest = "*"
-nbsmoke = "*"
+pytest-xdist = "*"
+nbval = "*"
 
 [feature.tests.tasks]
-test-example = { cmd = 'pytest tutorial --nbsmoke-run -k ".ipynb"', depends-on = ['download-data']}
+test-example = { cmd = 'pytest tutorial -n logical --dist loadscope --nbval-lax -p no:python', depends-on = ['download-data']}
