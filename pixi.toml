@@ -13,7 +13,7 @@ launch-lab = { cmd = 'jupyter lab tutorial/index.ipynb', depends-on = ['download
 launch-notebook = { cmd = 'jupyter notebook tutorial/index.ipynb', depends-on = ['download-data']}
 
 [dependencies]
-python = "=3.10"
+python = "=3.11"
 datashader = ">=0.16.2"
 holoviews = ">=1.19.1"
 hvplot = ">=0.10.0"
