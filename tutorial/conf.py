@@ -32,6 +32,7 @@ html_logo = '_static/holoviz-logo-unstacked.svg'
 html_favicon = "_static/favicon.ico"
 
 html_theme_options.update({
+    'use_edit_page_button': True,
     "github_url": "https://github.com/holoviz/tutorial",
     "icon_links": [
         {
@@ -45,17 +46,15 @@ html_theme_options.update({
             "icon": "fab fa-discourse",
         },
     ],
-    "secondary_sidebar_items": [
-        "github-stars-button",
-        "page-toc",
-    ],
 })
 
 html_context.update({
-    # Used to add binder links to the latest released tag.
     'last_release': f'v{release}',
+    'default_mode': 'light',
     'github_user': 'holoviz',
     'github_repo': 'tutorial',
+    'github_version': 'main',
+    'doc_path': 'tutorial',
 })
 
 # cell execution timeout in seconds (-1 to ignore, 30 by default)
