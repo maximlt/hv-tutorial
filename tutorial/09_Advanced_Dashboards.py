@@ -106,7 +106,7 @@ bound_affected_population = pn.bind(affected_population, index=index_stream.para
 
 
 title = '## Major Earthquakes 2000-2018'
-logo = pn.panel('../assets/usgs_logo.png', width=200, align='center')
+logo = pn.panel('./_static/usgs_logo.png', width=200, align='center')
 widgets = pn.WidgetBox(dist_slider, cmap_selector, margin=5)
 
 header = pn.Row(pn.Column(title, pn.panel(bound_affected_population, width=400)),

@@ -17,7 +17,7 @@ extensions += [
     'nbsite.analytics',
 ]
 
-html_static_path += ['_static']
+html_static_path += ['_static', 'assets']
 templates_path += ['_templates']
 
 html_theme = "pydata_sphinx_theme"
@@ -62,3 +62,12 @@ nbsite_analytics = {
 # Customize as its default is for all the other HoloViz sites.
 nbsite_hv_sidebar_dropdown['dropdown_value'] = {'text': 'HoloViz Sites'}
 del nbsite_hv_sidebar_dropdown['others']
+
+
+# myst_enable_extensions = [
+#     # MySt-Parser will attempt to convert any isolated img tags (i.e. not
+#     # wrapped in any other HTML) to the internal representation used in sphinx.
+#     'html_image',
+# ]
+
+nb_execution_mode = "off"
