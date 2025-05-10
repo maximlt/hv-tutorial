@@ -8,6 +8,8 @@ docs = ["doc"]
 tests = ["tests"]
 
 [tasks]
+lint-install = 'pre-commit install'
+lint = 'pre-commit run --all-files'
 download-data = 'python tutorial/download_data.py'
 launch-lab = { cmd = 'jupyter lab tutorial/index.ipynb', depends-on = ['download-data']}
 launch-notebook = { cmd = 'jupyter notebook tutorial/index.ipynb', depends-on = ['download-data']}
@@ -34,6 +36,8 @@ pyarrow = "*"
 xarray = "*"
 # We don't want to download mkl packages (which are large) mainly seen on Windows
 nomkl = "*"
+# pre-commit is a special case (needs to always be there for devs)
+pre-commit = "*"
 
 [feature.doc]
 channels = ["pyviz/label/tooling_dev", "conda-forge"]
@@ -50,6 +54,7 @@ docs-build = { cmd = 'sphinx-build -j auto -b html tutorial builtdocs', depends-
 pytest = "*"
 pytest-xdist = "*"
 nbval = "*"
+pre-commit = "*"
 
 [feature.tests.tasks]
 test-example = { cmd = 'pytest tutorial -n logical --dist loadscope --nbval-lax -p no:python', depends-on = ['download-data']}
