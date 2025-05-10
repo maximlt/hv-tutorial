@@ -1,0 +1,92 @@
+name: docs
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Site to build and deploy'
+        type: choice
+        options:
+        - dev
+        - main
+        - dryrun
+        required: true
+        default: dryrun
+  schedule:
+    - cron: '0 2 1 */2 SUN'  # every two months on Sunday at 2 am
+
+defaults:
+  run:
+    shell: bash -e {0}
+
+
+jobs:
+  build_docs:
+    name: Documentation
+    runs-on: 'ubuntu-latest'
+    timeout-minutes: 120
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: "eu-west-1"
+    steps:
+      - name: Install humor sans fonts for XKCD Matplotlib plots
+        run:  |
+          sudo apt-get update -y  &&  sudo apt-get install -y fonts-humor-sans fonts-comic-neue ttf-mscorefonts-installer
+          mkdir -p ~/.local/share/fonts
+          wget -nc https://github.com/ipython/xkcd-font/blob/master/xkcd-script/font/xkcd-script.ttf?raw=true -O ~/.local/share/fonts/xkcd-Script.ttf || true
+          sudo fc-cache -f -v
+      - uses: actions/checkout@v4
+      - uses: prefix-dev/setup-pixi@v0.8.8
+        with:
+          cache: false
+      - name: Set output
+        id: vars
+        run: echo "fdatetime=$(date +%Y%m%d-%H%M)" >> $GITHUB_OUTPUT
+      - name: pixi list
+        run: pixi list
+      - name: Build docs
+        run: pixi run docs-build
+      - name: git status
+        run: |
+          git status
+          git diff
+      - name: Get branch name
+        id: branch-name
+        run: echo "branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+      - name: Deploy dev
+        uses: peaceiris/actions-gh-pages@v4
+        if: |
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'dev') ||
+          (github.event_name == 'push' && steps.branch-name.outputs.branch != 'main')
+        with:
+          personal_token: ${{ secrets.ACCESS_TOKEN }}
+          external_repository: holoviz-dev/holoviz
+          publish_dir: ./builtdocs
+          force_orphan: true
+      - name: Deploy main
+        if: |
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'main') ||
+          (github.event_name == 'push' && steps.branch-name.outputs.branch == 'main')
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./builtdocs
+          cname: holoviz.org
+          force_orphan: true
+      # Upload the tutorial
+      - name: git clean
+        run: git clean -fxd .
+      - name: Create tutorial archive
+        run: pixi run archive
+      - name: save old
+        run: cp holoviz_tutorial.zip holoviz_tutorial_${{ steps.vars.outputs.fdatetime }}.zip
+      - name: Upload tutorial
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
+        run: aws s3 cp ./holoviz_tutorial_${{ steps.vars.outputs.fdatetime }}.zip s3://assets.holoviz.org/holoviz/tutorial/
+      - name: Upload tutorial
+        if: |
+          (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'main') ||
+          (github.event_name == 'push' && steps.branch-name.outputs.branch == 'main')
+        run: aws s3 cp ./holoviz_tutorial.zip s3://assets.holoviz.org/holoviz/tutorial/
