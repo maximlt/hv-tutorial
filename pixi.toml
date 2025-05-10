@@ -38,6 +38,9 @@ xarray = "*"
 nomkl = "*"
 # pre-commit is a special case (needs to always be there for devs)
 pre-commit = "*"
+# For the download_data.py script
+requests = "*"
+tqdm = "*"
 
 [feature.doc]
 channels = ["pyviz/label/tooling_dev", "conda-forge"]
