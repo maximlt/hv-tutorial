@@ -16,6 +16,7 @@ version = release = date.today().strftime("%Y.%m.%d")
 
 extensions += [
     'nbsite.analytics',
+    'nbsite.nb_interactivity_warning',
 ]
 
 html_static_path += ['_static']
