@@ -21,6 +21,9 @@ panel = ">=1.4.4,<1.5.0"
 param = ">=2.1.0,<3.0"
 dask = "*"
 jupyterlab = "*"
+# It'd be nice to have it but unfortunately it disables a lot of inline HTML
+# See https://github.com/jupyter-book/jupyterlab-myst/issues/64
+# jupyterlab-myst = "*"
 notebook = "*"
 matplotlib-base = ">=3"
 ipympl = "*"
