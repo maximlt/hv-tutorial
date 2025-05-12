@@ -15,6 +15,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash -el {0} 
+
 jobs:
   pre_commit:
     name: Run pre-commit
@@ -24,7 +28,18 @@ jobs:
       - uses: prefix-dev/setup-pixi@v0.8.8
         with:
           cache: false
-      - uses: holoviz-dev/holoviz_tasks/pre-commit@v0
+      - name: "Install pre-commit"
+        run: pipx install pre-commit
+      - name: "Run pre-commit"
+        shell: bash -e {0}
+        run: |
+          echo '```console' > $GITHUB_STEP_SUMMARY
+          # Enable color output for pre-commit and remove it for the summary
+          pre-commit run --all-files --show-diff-on-failure --color=always | \
+            tee >(sed -E 's/\x1B\[([0-9]{1,2}(;[0-9]{1,2})*)?[mGK]//g' >> $GITHUB_STEP_SUMMARY) >&1
+          exit_code=${PIPESTATUS[0]}
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          exit $exit_code
   test_suite:
     name: Pytest on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -33,9 +48,6 @@ jobs:
       matrix:
         os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
     timeout-minutes: 30
-    defaults:
-      run:
-        shell: bash -l {0} 
     steps:
       - uses: actions/checkout@v4
       - uses: prefix-dev/setup-pixi@v0.8.8
