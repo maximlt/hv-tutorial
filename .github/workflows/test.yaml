@@ -20,6 +20,7 @@ jobs:
     name: Run pre-commit
     runs-on: 'ubuntu-latest'
     steps:
+      - uses: actions/checkout@v4
       - uses: prefix-dev/setup-pixi@v0.8.8
         with:
           cache: false
