@@ -41,6 +41,7 @@ jobs:
           echo '```' >> $GITHUB_STEP_SUMMARY
           exit $exit_code
   test_suite:
+    needs: [pre-commit]
     name: Pytest on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
