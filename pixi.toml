@@ -11,8 +11,8 @@ tests = ["tests"]
 lint-install = 'pre-commit install'
 lint = 'pre-commit run --all-files'
 download-data = 'python tutorial/download_data.py'
-launch-lab = { cmd = 'jupyter lab tutorial/index.ipynb', depends-on = ['download-data']}
-launch-notebook = { cmd = 'jupyter notebook tutorial/index.ipynb', depends-on = ['download-data']}
+lab = { cmd = 'jupyter lab tutorial/index.ipynb', depends-on = ['download-data']}
+notebook = { cmd = 'jupyter notebook tutorial/index.ipynb', depends-on = ['download-data']}
 archive = 'python scripts/archive.py'
 
 [dependencies]
