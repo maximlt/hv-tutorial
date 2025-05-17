@@ -76,6 +76,6 @@ jobs:
       - name: uv pip list
         run: uv pip list
       - name: download data
-        run: python tutorial/download_data.py
+        run: uv run python tutorial/download_data.py
       - name: Example tests
         run: uv run --group dev pytest tutorial -n logical --dist loadscope --nbval-lax -p no:python
