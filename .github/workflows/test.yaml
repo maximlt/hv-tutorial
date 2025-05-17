@@ -58,3 +58,22 @@ jobs:
         run: pixi list
       - name: Example tests
         run: pixi run test-example
+  test_suite_uv:
+    needs: [pre_commit]
+    name: Pytest on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-latest', 'macos-latest', 'windows-latest']
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+      - name: Set up Python
+        run: uv python install
+      - name: uv pip list
+        run: uv pip list
+      - name: Example tests
+        run: uv run --group dev pytest tutorial -n logical --dist loadscope --nbval-lax -p no:python

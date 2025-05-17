@@ -1,0 +1,38 @@
+[project]
+name = "hv-tutorial"
+version = "0.1.0"
+requires-python = "==3.13.*"
+dependencies = [
+    "datashader >=0.18.1",
+    "holoviews >=1.20.2",
+    "hvplot >=0.11.3",
+    "panel >=1.6.3",
+    "param >=2.2.0,<3.0",
+    "dask ",
+    "jupyterlab ",
+    # It'd be nice to have it but unfortunately it disables a lot of inline HTML
+    # See https://github.com/jupyter-book/jupyterlab-myst/issues/64
+    # "jupyterlab-myst"
+    "notebook",
+    "matplotlib >=3",
+    "ipympl",
+    "fsspec",
+    "netcdf4",
+    "plotly",
+    "pyarrow",
+    "xarray",
+    # pre-commit is a special case (needs to always be there for devs)
+    "pre-commit",
+    # For the download_data.py script
+    "requests",
+    "tqdm",
+]
+
+[dependency-groups]
+dev = [
+    "nbsite >=0.9.0a4",
+    "pytest",
+    "pytest-xdist",
+    "nbval",
+    "pre-commit",
+]
