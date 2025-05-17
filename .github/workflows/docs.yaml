@@ -28,10 +28,6 @@ jobs:
     name: Documentation
     runs-on: 'ubuntu-latest'
     timeout-minutes: 120
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_DEFAULT_REGION: "eu-west-1"
     steps:
       - name: Install humor sans fonts for XKCD Matplotlib plots
         run:  |
@@ -77,18 +73,3 @@ jobs:
           publish_dir: ./builtdocs
           # cname: holoviz.org
           force_orphan: true
-      # Upload the tutorial
-      - name: git clean
-        run: git clean -fxd .
-      - name: Create tutorial archive
-        run: pixi run archive
-      - name: save old
-        run: cp holoviz_tutorial.zip holoviz_tutorial_${{ steps.vars.outputs.fdatetime }}.zip
-      # - name: Upload tutorial
-      #   if: github.event_name == 'workflow_dispatch' || github.event_name == 'push'
-      #   run: aws s3 cp ./holoviz_tutorial_${{ steps.vars.outputs.fdatetime }}.zip s3://assets.holoviz.org/holoviz/tutorial/
-      # - name: Upload tutorial
-      #   if: |
-      #     (github.event_name == 'workflow_dispatch' && github.event.inputs.target == 'main') ||
-      #     (github.event_name == 'push' && steps.branch-name.outputs.branch == 'main')
-      #   run: aws s3 cp ./holoviz_tutorial.zip s3://assets.holoviz.org/holoviz/tutorial/
