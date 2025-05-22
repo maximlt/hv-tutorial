@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from datetime import date
-
-import pydata_sphinx_theme
+from pathlib import Path
 
 from nbsite.shared_conf import *
 
 project = "HoloViz Tutorial"
-authors = 'HoloViz authors'
+authors = author = 'HoloViz authors'
 copyright_years['start_year'] = '2017'
 copyright = copyright_fmt.format(**copyright_years)
 description = 'The HoloViz Tutorial.'
@@ -19,25 +18,24 @@ extensions += [
     'nbsite.nb_interactivity_warning',
 ]
 
-html_static_path += ['_static']
-
-if pydata_sphinx_theme.__version__ == '0.16.1':
-    # See https://github.com/pydata/pydata-sphinx-theme/issues/2088
-    templates_path.append('_static/patch_templates')  # noqa
+# Dont inherit from nbsite's shared static folder as it contains
+# some CSS files that mess with Sphinx book theme's CSS
+html_static_path = ['_static']
 
 templates_path += [
     '_templates'
 ]
 
-# Without this .txt is appended to the files
-html_sourcelink_suffix = ''
-
-html_theme = "pydata_sphinx_theme"
+html_theme = "sphinx_book_theme"
 html_logo = '_static/holoviz-logo-unstacked.svg'
 html_favicon = "_static/favicon.ico"
 
+gh_org = 'holoviz'
+gh_repo = 'tutorial'
+gh_branch = 'main'
+doc_path = 'tutorial'
+
 html_theme_options.update({
-    'use_edit_page_button': True,
     "github_url": "https://github.com/holoviz/tutorial",
     "icon_links": [
         {
@@ -51,34 +49,36 @@ html_theme_options.update({
             "icon": "fab fa-discourse",
         },
     ],
-    'secondary_sidebar_items': [
-        "page-toc",
-        "edit-this-page",
-        "sourcelink",
-        "binderlink",
-    ],
+    "use_download_button": True,
+    "use_source_button": True,
+    "use_edit_page_button": True,
+    "use_repository_button": True,
+    "use_issues_button": True,
+    "repository_url": "https://github.com/holoviz/tutorial",
+    "repository_branch": "main",
+    "path_to_docs": "tutorial",
+    "launch_buttons": {
+        "notebook_interface": "jupyterlab",
+        "binderhub_url": f"https://mybinder.org/v2/gh/{gh_org}/{gh_repo}/{gh_branch}?filepath={doc_path}/"
+    },
 })
 
-gh_org = 'holoviz'
-gh_repo = 'tutorial'
-gh_branch = 'main'
-doc_path = 'tutorial'
-
-html_context.update({
-    'last_release': f'v{release}',
-    'default_mode': 'light',
-    'github_user': gh_org,
-    'github_repo': gh_repo,
-    'github_version': gh_branch,
-    'doc_path': doc_path,
-    'binder_url': f'https://mybinder.org/v2/gh/{gh_org}/{gh_repo}/{gh_branch}?filepath={doc_path}/'  # {relpath}
-})
+# nbsite overrides that
+html_sidebars = {
+    "**": [
+        "navbar-logo.html",
+        "icon-links.html",
+        "search-button-field.html",
+        "sbt-sidebar-nav.html",
+        "hv-sidebar-dropdown",
+    ]
+}
 
 # cell execution timeout in seconds (-1 to ignore, 30 by default)
 nb_execution_timeout = 240
 
 # Uncomment to turn off notebook execution.
-# nb_execution_mode = "off"
+nb_execution_mode = "off"
 
 nbsite_analytics = {
     'goatcounter_holoviz': True,

@@ -35,4 +35,5 @@ dev = [
     "pytest-xdist",
     "nbval",
     "pre-commit",
+    "sphinx-book-theme>=1.1.4",
 ]

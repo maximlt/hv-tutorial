@@ -54,6 +54,7 @@ DISPLAY = ":99.0"
 [feature.doc.dependencies]
 # Docs deps, that used to be in a `doc` environment but locking is so slow.
 nbsite = ">=0.9.0a4"
+sphinx-book-theme = "*"
 
 [feature.doc.tasks]
 docs-build = { cmd = 'sphinx-build -j auto -b html tutorial builtdocs', depends-on = ['download-data']}
