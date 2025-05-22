@@ -48,6 +48,11 @@ html_theme_options.update({
             "url": "https://discourse.holoviz.org/",
             "icon": "fab fa-discourse",
         },
+        {
+            'name': 'Discord',
+            'url': 'https://discord.gg/AXRHnJU6sP',
+            'icon': 'fa-brands fa-discord',
+        },
     ],
     "use_download_button": True,
     "use_source_button": True,
@@ -78,7 +83,7 @@ html_sidebars = {
 nb_execution_timeout = 240
 
 # Uncomment to turn off notebook execution.
-nb_execution_mode = "off"
+# nb_execution_mode = "off"
 
 nbsite_analytics = {
     'goatcounter_holoviz': True,
