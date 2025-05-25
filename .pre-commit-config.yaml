@@ -18,3 +18,12 @@ repos:
         files: ^pixi\.toml$
         pass_filenames: false
         args: [workspace, export, conda-environment, binder/environment.yml]
+-   repo: local
+    hooks:
+      - id: run-uv
+        name: Run uv
+        entry: uv
+        language: system
+        files: ^uv\.lock$
+        pass_filenames: false
+        args: [export, --format, requirements.txt, --no-dev, --output-file, binder/requirements.txt]
